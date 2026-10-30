@@ -26,7 +26,7 @@ Planning assumption: homeowners comparing curtains and blinds for their rooms. I
 - Direct contact routes rather than a purchasing workflow.
 - The user delegated remaining creative and technical choices.
 - Current requested deliverable: execute the approved design as a local website.
-- Later user revisions: a page-load curtain unveiling, parallax throughout the whole page, and removal of Mac2Din2 watermark text from website photographs. This explicitly overrides the original watermark-preservation constraint. Original files remain preserved.
+- Later user revisions: a page-load curtain unveiling, parallax throughout the whole page, watermark removal, consistent image quality, no repeated photographs, and full image compositions with minimal truncation. These override the original watermark-preservation and detail-crop constraints. Source originals remain preserved.
 
 ## Brand Commitments
 
@@ -37,7 +37,7 @@ Preserve the existing house/MD monogram, gold and dark roof, brand lettering, an
 Inspected the public business profile through the user's connected Chrome session on 2026-10-30: https://www.instagram.com/mac2din2houseofcurtain/
 
 - Actual logo: `assets/source/mac2din2-logo-original.jpg`, 1080 × 1080.
-- Five installation photographs are preserved in `assets/source/`; provenance is recorded in `assets/source/README.md`.
+- Ten distinct installation photographs are preserved in `assets/source/`; provenance is recorded in `assets/source/README.md`. The website uses enhanced derivatives, with a different photo in every slot.
 - Profile and captions show pleated sheers, blackout drapes, swag curtains, Korean blinds, roll-up/sunscreen blinds, and wood blinds.
 - Public inquiry numbers: 0917 836 1524 and 0922 816 9859.
 - Public Instagram profile provides a Message control. No separate messaging deep link has been verified.

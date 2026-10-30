@@ -7,6 +7,7 @@ A local, static promotional website with a curtain-opening intro, an interactive
 Use Node **24** (`.nvmrc`; Astro requires at least 22.23.4).
 
 ```sh
+nvm install
 nvm use
 npm ci
 npm run dev
@@ -40,7 +41,7 @@ The intro opens automatically and can be skipped. Direct section links bypass it
 
 Contact uses only the business's published telephone numbers and Instagram profile. There is no contact form, backend, online checkout, analytics integration or deployment configuration. Calling or messaging is completed by the visitor in the selected channel.
 
-The five installation images are from the business profile. Two had their business watermarks removed at the user's request; their retouched derivatives reconstruct the covered pixels. Source originals are retained for comparison. Virtual room views and fabric colors are illustrative.
+The ten distinct installation images are from ten business-profile posts. Each image slot uses a different photograph. All received conservative clarity and exposure restoration; watermark overlays were removed where present. Reconstructed pixels are retouched content, and source originals remain available for comparison. Images keep their full composition with contain sizing; parallax moves their frames rather than zooming/cropping the photos. Virtual room views and fabric colors are illustrative.
 
 ## Verification limits
 

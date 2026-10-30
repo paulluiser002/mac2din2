@@ -11,6 +11,9 @@ for (const href of ['tel:+639178361524', 'tel:+639228169859', 'https://www.insta
 }
 assert.equal(document.querySelectorAll('#works [data-slide]').length, 5);
 assert.equal(document.querySelectorAll('.detail-section [data-slide]').length, 4);
+const installationImages = [...document.querySelectorAll('.work-photo img, .detail-photo img, .approach-image img')];
+assert.equal(installationImages.length, 10);
+assert.equal(new Set(installationImages.map(image => image.getAttribute('src'))).size, 10, 'Every image slot must use a distinct photograph.');
 assert.equal(document.querySelector('main').hasAttribute('inert'), false);
 for (const image of document.querySelectorAll('img')) {
   assert.ok(image.hasAttribute('alt'), 'Every image needs alt text or explicit decorative alt.');
@@ -20,4 +23,4 @@ for (const image of document.querySelectorAll('img')) {
     await access(`dist${path}`);
   }
 }
-console.log('Verified generated no-JS content, all direct contact routes, both galleries, and every referenced image.');
+console.log('Verified generated no-JS content, contact routes, both galleries, 10 unique photo slots, and every referenced image.');

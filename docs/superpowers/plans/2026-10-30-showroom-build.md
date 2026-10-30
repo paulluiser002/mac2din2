@@ -33,10 +33,10 @@ Files: `src/pages/index.astro`, `src/styles/global.css`, `src/components/Icon.as
 
 Interfaces: static contact anchors `#contact`, gallery `#works`, showroom `#showroom` / `#curtains`; image records contain `src`, `srcset`, `alt`, `title`, `type`, `source`.
 
-- [ ] Prepare actual logo and responsive local images; preserve originals.
-- [ ] Build complete static page with semantic headings, working anchors/contact links, project galleries, and static showroom fallback.
-- [ ] Run asset script and Astro check/build; inspect initial desktop/mobile render.
-- [ ] Commit the page and assets.
+- [x] Prepare actual logo and responsive local images; preserve originals.
+- [x] Build complete static page with semantic headings, working anchors/contact links, project galleries, and static showroom fallback.
+- [x] Run asset script and Astro check/build; inspect initial desktop/mobile render.
+- [x] Commit the page and assets.
 
 ### Task 2: 3D scene and progressive motion
 
@@ -44,11 +44,11 @@ Files: `src/components/Showroom.tsx`, `src/scene/Room.tsx`, `src/scene/curtain.t
 
 Interfaces: `getScenePose(progress, mode)` yields finite open/camera/light state; `sampleCurtain(u, v, openness, side)` defines physical drape geometry; `Showroom` enhances the scene host and shared static controls via DOM IDs.
 
-- [ ] Write scene tests proving gathering clears the center, curtain vertices/normals stay finite, progress clamps, and selected view changes the rendered curtain state. Run and observe the missing-module failure.
-- [ ] Implement geometry and pose functions; run unit tests to green.
-- [ ] Build the room, lighting, drapes, furniture, shared canvas, scroll coupling, material controls, and offscreen rendering pause.
-- [ ] Provide conservative loading/reduced-motion/WebGL-error fallbacks and test behavior in the browser.
-- [ ] Run tests and production build; commit.
+- [x] Write scene tests proving gathering clears the center, curtain vertices/normals stay finite, progress clamps, and selected view changes the rendered curtain state. Run and observe the missing-module failure.
+- [x] Implement geometry and pose functions; run unit tests to green.
+- [x] Build the room, lighting, drapes, furniture, shared canvas, scroll coupling, material controls, and offscreen rendering pause.
+- [x] Provide conservative loading/reduced-motion/WebGL-error fallbacks and test behavior in the browser.
+- [x] Run tests and production build; commit.
 
 ### Task 3: Galleries and delivery
 
@@ -56,8 +56,8 @@ Files: `src/scripts/carousel.ts`, `tests/carousel.test.ts`, `README.md`, existin
 
 Interface: `initCarousel(root)` binds the gallery's track, controls, count and pagination, returning disposal for page lifecycle cleanup.
 
-- [ ] Write real-DOM tests for next/previous movement, first/last disabled state, empty/single-item behavior, and manual scroll count. Observe failure before implementation.
-- [ ] Implement accessible gallery controls and viewport-relative slide selection; keep native scroll as baseline.
-- [ ] Browser-check phone/desktop, reduced motion, no-JS, WebGL failure, anchors, material controls, and image delivery; resolve observed issues.
-- [ ] Run full suite, Astro check/build, design detector, and a fresh whole-change review. Fix material findings and verify.
-- [ ] Commit, leave local preview available, and report the result and any material limits.
+- [x] Write real-DOM tests for next/previous movement, first/last disabled state, empty/single-item behavior, and manual scroll count. Observe failure before implementation.
+- [x] Implement accessible gallery controls and viewport-relative slide selection; keep native scroll as baseline.
+- [x] Browser-check phone/desktop, reduced motion, no-JS, WebGL failure, anchors, material controls, and image delivery; resolve observed issues.
+- [x] Run full suite, Astro check/build, design detector, and a fresh whole-change review. Fix material findings and verify.
+- [x] Commit, leave local preview available, and report the result and any material limits.

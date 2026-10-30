@@ -33,3 +33,16 @@ export const projects = [
 
 export const imageSet = (image: string) => [480, 960, 1440]
   .map(width => `/images/${image}-${width}.webp ${width}w`).join(', ');
+
+export const approachProject = {
+  image: 'stairwell-sheers',
+  alt: 'White pleated sheers following tall curved stairwell windows beside an ornamental railing.',
+  source: 'https://www.instagram.com/mac2din2houseofcurtain/p/DLpTAy5RTze/',
+};
+
+export const detailProjects = [
+  { image: 'neutral-bedroom', title: 'Layered for a restful room', type: 'Pleated drapes & sheers', alt: 'Pale pleated drapes tied to each side of white bedroom sheers behind a bed.', source: 'https://www.instagram.com/mac2din2houseofcurtain/p/DQBANWpE4mM/' },
+  { image: 'tailored-pleats', title: 'Gathered with care', type: 'Pleats & matching tiebacks', alt: 'Taupe pleated curtains with matching tiebacks over white sheers and a patterned window grille.', source: 'https://www.instagram.com/mac2din2houseofcurtain/p/DJVUkUwSA1A/' },
+  { image: 'single-panel', title: 'A tailored finishing touch', type: 'Single-panel curtain', alt: 'A taupe curtain panel gathered into a matching tieback at a tall narrow window.', source: 'https://www.instagram.com/mac2din2houseofcurtain/p/DJVUUZhyMHp/' },
+  { image: 'blue-blind', title: 'Control the daylight', type: 'Korean blinds', alt: 'A blue and white alternating sheer and solid Korean blind fitted within a recessed window.', source: 'https://www.instagram.com/mac2din2houseofcurtain/p/DJVRNDxSzDG/' },
+];

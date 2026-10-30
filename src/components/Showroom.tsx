@@ -5,6 +5,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Room, { type RoomState } from '../scene/Room';
 import type { Fabric, ViewMode } from '../scene/pose';
+import { resetStoryText } from '../scene/story';
+import { allowsMotion } from '../scripts/motion';
 
 class SceneBoundary extends Component<{ children: ReactNode; onError: () => void }, { failed: boolean }> {
   state = { failed: false };
@@ -24,7 +26,7 @@ export default function Showroom() {
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     const narrow = matchMedia('(max-width: 700px)');
     const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-    const apply = () => { setEnabled(!motion.matches && !connection?.saveData); setMobile(narrow.matches); };
+    const apply = () => { setEnabled(allowsMotion(motion.matches, Boolean(connection?.saveData))); setMobile(narrow.matches); };
     apply();
     motion.addEventListener('change', apply);
     narrow.addEventListener('change', apply);
@@ -94,15 +96,18 @@ export default function Showroom() {
       handlers.push(() => button.removeEventListener('click', click));
     });
     ScrollTrigger.refresh();
+    // Hydration expands the cinematic section; keep a direct contact/work link aligned.
+    const anchor = document.getElementById(location.hash.slice(1));
+    if (anchor && !root.contains(anchor)) requestAnimationFrame(() => anchor.scrollIntoView({ behavior: 'instant', block: 'start' }));
     cleanup.current = () => {
       trigger.kill(); observer.disconnect(); handlers.forEach(dispose => dispose());
       document.removeEventListener('visibilitychange', setActive);
       canvas.removeEventListener('webglcontextlost', lost);
-      gsap.set([intro, story], { clearProps: 'all' });
-      intro.inert = false; story.setAttribute('aria-hidden', 'true');
+      resetStoryText(intro, story);
       root.classList.remove('scene-ready', 'motion-enabled');
       caption.textContent = 'Illustrative room';
       controls.setAttribute('hidden', '');
+      ScrollTrigger.refresh();
       cleanup.current = () => {};
     };
   }

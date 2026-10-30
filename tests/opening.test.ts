@@ -35,3 +35,12 @@ test('reduced motion or direct contact anchors bypass the intro entirely', () =>
   assert.equal(opening.hidden, true);
   assert.notEqual(main.inert, true);
 });
+
+test('late script loading never locks a page whose CSS curtain intro already finished', () => {
+  const { opening, main } = fixture();
+  opening.style.visibility = 'hidden';
+  const finish = initOpening(opening, [main], false);
+  const wasLocked = main.inert;
+  finish();
+  assert.equal(wasLocked, false);
+});

@@ -6,14 +6,7 @@ import '@fontsource/bodoni-moda/400.css';
 import '../styles/global.css';
 import Icon from '../components/Icon.astro';
 import Showroom from '../components/Showroom';
-import { projects, imageSet } from '../data/projects';
-
-const details = [
-  { image: 'sheer-room', title: 'The quiet beauty of a pleat', type: 'Sheers & drapes', position: '68% 36%' },
-  { image: 'classic-room', title: 'A more decorative expression', type: 'Swags & finishing details', position: '60% 16%' },
-  { image: 'tall-room', title: 'Every window has its own scale', type: 'Double-height curtains', position: '69% 28%' },
-  { image: 'blinds-room', title: 'A different way to filter light', type: 'Korean blinds', position: '23% 35%' },
-];
+import { projects, imageSet, detailProjects as details, approachProject } from '../data/projects';
 ---
 <!doctype html>
 <html lang="en">
@@ -110,7 +103,7 @@ const details = [
       </section>
 
       <section class="approach-section section-pad" id="approach" aria-labelledby="approach-heading">
-        <div class="approach-image"><img src="/images/layered-room-960.webp" srcset={imageSet('layered-room')} sizes="(max-width: 700px) 88vw, 38vw" width="1013" height="1351" alt="Layered pleated drapes and sheer curtains framing a bright living-room window." loading="lazy" /></div>
+        <div class="approach-image"><img src={`/images/${approachProject.image}-960.webp`} srcset={imageSet(approachProject.image)} sizes="(max-width: 700px) 88vw, 38vw" width="1440" height="1800" alt={approachProject.alt} loading="lazy" /></div>
         <div class="approach-copy"><h2 id="approach-heading">Your windows.<br />Your way of living.</h2><p>Some rooms call for a soft filter of daylight. Others need a little more privacy. And some deserve a statement.</p><p>Start with your room, your ideas and the feeling you want to come home to. We’ll talk through the possibilities with you.</p><a class="button button-outline" href="#contact">Tell us about your space <Icon /></a></div>
       </section>
 
@@ -118,7 +111,7 @@ const details = [
         <div class="section-heading section-pad"><h2 id="detail-heading">It’s all in the details.</h2><div class="carousel-navigation"><span class="slide-count" data-count aria-live="polite">1 / {details.length}</span><button class="circle-button previous" data-prev aria-label="Previous curtain detail" disabled><Icon name="chevron" /></button><button class="circle-button" data-next aria-label="Next curtain detail"><Icon name="chevron" /></button></div></div>
         <div class="detail-track" data-track aria-label="Curtain and blind details" role="region" tabindex="0">
           {details.map(detail => (
-            <figure class="detail-slide" data-slide><div class="detail-photo"><img src={`/images/${detail.image}-960.webp`} srcset={imageSet(detail.image)} sizes="(max-width: 700px) 76vw, 38vw" width="960" height="960" alt={`${detail.type}: a closer view from an actual Mac2Din2 installation.`} style={`object-position:${detail.position}`} loading="lazy" /></div><figcaption><h3>{detail.title}</h3><p>{detail.type}</p></figcaption></figure>
+            <figure class="detail-slide" data-slide><div class="detail-photo"><img src={`/images/${detail.image}-960.webp`} srcset={imageSet(detail.image)} sizes="(max-width: 700px) 76vw, 38vw" width="1440" height={detail.image === 'blue-blind' ? 1800 : 1440} alt={detail.alt} loading="lazy" /></div><figcaption><h3>{detail.title}</h3><p>{detail.type}</p></figcaption></figure>
           ))}
         </div>
       </section>
@@ -139,25 +132,30 @@ const details = [
     <script>
       import { initCarousel } from '../scripts/carousel';
       import { initOpening } from '../scripts/opening';
+      import { allowsMotion } from '../scripts/motion';
       import gsap from 'gsap';
       import { ScrollTrigger } from 'gsap/ScrollTrigger';
       document.documentElement.classList.add('has-js');
       const opening = document.getElementById('opening-curtain')!;
       const pageParts = [...document.querySelectorAll<HTMLElement>('.site-header, main, .site-footer, .mobile-contact')];
-      const finishOpening = initOpening(opening, pageParts, matchMedia('(prefers-reduced-motion: reduce)').matches || Boolean(location.hash && location.hash !== '#'));
+      const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+      const saveData = Boolean((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData);
+      const finishOpening = initOpening(opening, pageParts, !allowsMotion(reducedMotion.matches, saveData) || Boolean(location.hash && location.hash !== '#'));
+      reducedMotion.addEventListener('change', event => { if (event.matches) finishOpening(); });
       const disposers = [...document.querySelectorAll<HTMLElement>('[data-carousel]')].map(initCarousel);
       const observer = new IntersectionObserver(([entry]) => document.body.classList.toggle('contact-visible', entry.isIntersecting), { threshold: 0.15 });
       observer.observe(document.getElementById('contact')!);
       gsap.registerPlugin(ScrollTrigger);
       const media = gsap.matchMedia();
       media.add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.fromTo('.approach-image img', { yPercent: -3 }, { yPercent: -9, ease: 'none', scrollTrigger: { trigger: '.approach-image', start: 'top bottom', end: 'bottom top', scrub: true } });
+        if (!allowsMotion(false, saveData)) return;
+        gsap.fromTo('.approach-image', { y: 18 }, { y: -18, ease: 'none', scrollTrigger: { trigger: '.approach-image', start: 'top bottom', end: 'bottom top', scrub: true } });
         gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach(element => {
           const distance = Number(element.dataset.parallax) || 20;
           gsap.fromTo(element, { y: distance }, { y: -distance, ease: 'none', scrollTrigger: { trigger: element.closest('section, footer')!, start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
         });
-        gsap.utils.toArray<HTMLElement>('.work-photo img').forEach(element => gsap.fromTo(element, { yPercent: -3 }, { yPercent: 3, ease: 'none', scrollTrigger: { trigger: '#works', start: 'top bottom', end: 'bottom top', scrub: 0.6 } }));
-        gsap.utils.toArray<HTMLElement>('.detail-photo img').forEach(element => gsap.fromTo(element, { yPercent: -3 }, { yPercent: 3, ease: 'none', scrollTrigger: { trigger: '.detail-section', start: 'top bottom', end: 'bottom top', scrub: 0.6 } }));
+        gsap.utils.toArray<HTMLElement>('.work-slide').forEach(element => gsap.fromTo(element, { y: 12 }, { y: -12, ease: 'none', scrollTrigger: { trigger: '#works', start: 'top bottom', end: 'bottom top', scrub: 0.6 } }));
+        gsap.utils.toArray<HTMLElement>('.detail-slide').forEach(element => gsap.fromTo(element, { y: 12 }, { y: -12, ease: 'none', scrollTrigger: { trigger: '.detail-section', start: 'top bottom', end: 'bottom top', scrub: 0.6 } }));
       });
       window.addEventListener('pagehide', event => {
         if (event.persisted) return;

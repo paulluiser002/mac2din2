@@ -5,7 +5,8 @@ export function initOpening(opening: HTMLElement, pageParts: HTMLElement[], bypa
     opening.hidden = true;
     pageParts.forEach(part => { part.inert = false; });
   };
-  if (bypass) { finish(); return finish; }
+  const alreadyFinished = opening.ownerDocument.defaultView?.getComputedStyle(opening).visibility === 'hidden';
+  if (bypass || alreadyFinished) { finish(); return finish; }
   pageParts.forEach(part => { part.inert = true; });
   opening.querySelector('button')?.addEventListener('click', finish, { once: true });
   opening.addEventListener('animationend', event => { if (event.target === opening) finish(); });

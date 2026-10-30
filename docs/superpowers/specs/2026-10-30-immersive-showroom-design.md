@@ -6,6 +6,8 @@ Date: 2026-10-30, Asia/Manila. Status: proposed design and build roadmap; no pro
 
 After authorizing execution, the user requested a curtain-opening unveiling on page load, parallax from the top through the bottom of the page, and removal of the Mac2Din2 watermarks in website photographs. These requirements supersede the initial restraint on page-wide parallax and the watermark-preservation instruction below. Keep the originals intact; use cleaned derivatives, a skippable intro with reduced-motion bypass, and section-specific depth motion while preserving native scrolling. The header remains available during the visit and its height is reserved in the sticky showroom to prevent mobile controls from overlapping the contact action.
 
+Additional implementation steering: enhance images for equal visual quality, never repeat a photograph, and avoid truncation as far as possible. The implementation therefore uses ten distinct source posts, restored image derivatives, contain sizing to show the entire composition, and frame-level parallax rather than zoomed crops. This overrides the proposed repeated detail crops later in the original brief.
+
 ## Intent
 
 Make visitors feel the difference curtains bring to a room, show that Mac2Din2 has actual installation work behind the presentation, and make it easy to initiate contact. The central idea is **a room revealed through fabric and daylight**.
