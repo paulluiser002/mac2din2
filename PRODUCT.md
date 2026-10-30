@@ -25,7 +25,8 @@ Planning assumption: homeowners comparing curtains and blinds for their rooms. I
 - The actual business logo, prepared at appropriate quality for website use.
 - Direct contact routes rather than a purchasing workflow.
 - The user delegated remaining creative and technical choices.
-- Current requested deliverable: planning. A production website has not been requested or built in this conversation.
+- Current requested deliverable: execute the approved design as a local website.
+- Later user revisions: a page-load curtain unveiling, parallax throughout the whole page, and removal of Mac2Din2 watermark text from website photographs. This explicitly overrides the original watermark-preservation constraint. Original files remain preserved.
 
 ## Brand Commitments
 

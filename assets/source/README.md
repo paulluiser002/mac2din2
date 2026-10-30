@@ -11,4 +11,10 @@ Retrieved on 2026-10-30 from visible assets on the business's public Instagram p
 | `pleated-drapes-project.jpg` | https://www.instagram.com/mac2din2houseofcurtain/p/DR54aqXEzAU/ | Caption describes pleated drapes. Actual downloaded bytes are JPEG although the remote filename ended in .heic. 1200 × 1200. |
 | `korean-blinds-project.webp` | https://www.instagram.com/mac2din2houseofcurtain/p/DQ9FKxakwFv/ | Caption describes Korean blinds. |
 
-Before gallery inclusion, visually review every selected image at delivery size, retain existing watermarks, and caption only what can be verified. Do not infer locations, client names, dates, or measured light-blocking performance. Source URLs are provenance; the finished website should use local, optimized assets rather than hotlink expiring CDN URLs or embed a live Instagram feed.
+All five images were visually reviewed. Caption only what can be verified; do not infer locations, client names, dates, or measured light-blocking performance. Source URLs are provenance; the website uses local optimized assets.
+
+## Authorized website derivatives
+
+The user subsequently asked to remove the Mac2Din2 watermarks. `assets/retouched/classic-room.png` and `assets/retouched/tall-room.png` are image-tool edits of the two watermarked originals, inspected against the source and used for all website sizes and detail crops. Reconstruction under the watermark is retouched image content; these are not untouched sensor originals. The other three selected photographs had no visible Mac2Din2 watermarks.
+
+`assets/brand/logo-restored.png` is a conservative image-tool restoration of the actual logo. The original roof, MD mark, wording, and gold/black identity are preserved. Web derivatives are generated into `public/images/`.

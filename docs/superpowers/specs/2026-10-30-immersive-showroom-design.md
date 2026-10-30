@@ -2,6 +2,10 @@
 
 Date: 2026-10-30, Asia/Manila. Status: proposed design and build roadmap; no production website implemented.
 
+## Approved implementation revisions
+
+After authorizing execution, the user requested a curtain-opening unveiling on page load, parallax from the top through the bottom of the page, and removal of the Mac2Din2 watermarks in website photographs. These requirements supersede the initial restraint on page-wide parallax and the watermark-preservation instruction below. Keep the originals intact; use cleaned derivatives, a skippable intro with reduced-motion bypass, and section-specific depth motion while preserving native scrolling. The header remains available during the visit and its height is reserved in the sticky showroom to prevent mobile controls from overlapping the contact action.
+
 ## Intent
 
 Make visitors feel the difference curtains bring to a room, show that Mac2Din2 has actual installation work behind the presentation, and make it easy to initiate contact. The central idea is **a room revealed through fabric and daylight**.
