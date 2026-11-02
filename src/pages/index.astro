@@ -16,6 +16,20 @@ const features = gallery('feature');
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline id="reload-start">
+      const reloading = performance.getEntriesByType('navigation')[0]?.type === 'reload';
+      history.scrollRestoration = reloading ? 'manual' : 'auto';
+      if (reloading) {
+        // Clear retained section links before the browser or showroom can restore them.
+        history.replaceState(history.state, '', location.pathname + location.search);
+        const startAtHero = () => window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+        startAtHero();
+        window.addEventListener('pageshow', () => {
+          if (!document.documentElement.dataset.unveiled) startAtHero();
+          requestAnimationFrame(() => { history.scrollRestoration = 'auto'; });
+        }, { once: true });
+      }
+    </script>
     <meta name="theme-color" content="#fafaf7" />
     <title>Mac2Din2 House of Curtains — A different feeling. In every fold.</title>
     <meta name="description" content="Explore curtains, sheers and blinds by Mac2Din2 House of Curtains. Discover our installations and contact us about your windows." />
