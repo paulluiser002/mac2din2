@@ -1,0 +1,13 @@
+---
+import { films } from '../data/projects';
+---
+<section class="films-section section-pad" id="films" aria-labelledby="films-heading">
+  <div class="films-heading" data-depth="35"><h2 id="films-heading">Step a little closer.</h2><p>A walk through three distinct spaces.<br />Real light. Real movement.</p></div>
+  <div class="film-grid" data-depth="55">
+    {films.map(item=><figure class="film-card" data-film data-media-id={item.id}>
+      <div class="media-frame"><video data-src={`/media/${item.id}.mp4`} poster={`/media/${item.id}-poster.webp`} width="720" height="1280" muted playsinline loop preload="none" aria-label={item.title}></video><button class="film-toggle" data-play type="button">Play film</button></div>
+      <figcaption><h3>{item.title}</h3><span>{Math.round(item.duration??0)} sec · Silent film</span></figcaption>
+      <noscript><a href={`/media/${item.id}.mp4`}>Watch film</a></noscript>
+    </figure>)}
+  </div>
+</section>

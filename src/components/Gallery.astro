@@ -1,0 +1,24 @@
+---
+import Icon from './Icon.astro';
+import { gallery, imageSet } from '../data/projects';
+interface Props { group: string; id: string; title: string; copy: string; }
+const {group,id,title,copy}=Astro.props;
+const items=gallery(group);
+---
+<section class="gallery-section" id={id} aria-labelledby={`${id}-heading`} data-carousel>
+  <div class="gallery-heading section-pad" data-depth="24">
+    <div><h2 id={`${id}-heading`}>{title}</h2><p>{copy}</p></div>
+    <div class="gallery-position"><span data-count class="slide-count" aria-live="polite" aria-atomic="true">1 / {items.length}</span><span>Swipe to explore</span></div>
+  </div>
+  <div class="gallery-depth" data-depth="48">
+    <div class="gallery-track" data-track role="region" aria-roledescription="carousel" aria-label={title} tabindex="0">
+      {items.map((item,index)=><figure class="gallery-slide" data-slide data-media-id={item.id} aria-label={`${index+1} of ${items.length}`}>
+        <div class="media-frame"><img src={`/media/${item.id}-960.webp`} srcset={imageSet(item.id)} sizes="(max-width: 700px) 78vw, 34vw" width={item.width} height={item.height} alt={item.alt} loading="lazy" decoding="async" /></div>
+        <figcaption><h3>{item.title}</h3></figcaption>
+      </figure>)}
+    </div>
+    <button class="gallery-arrow previous" data-prev aria-label={`Previous photograph in ${title}`}><Icon name="chevron" /></button>
+    <button class="gallery-arrow following" data-next aria-label={`Next photograph in ${title}`}><Icon name="chevron" /></button>
+  </div>
+  <div class="gallery-footer section-pad"><span>Our actual installations. Swipe or use the arrows to explore.</span><a class="text-link" href="#contact">Talk to us about your space <Icon /></a></div>
+</section>

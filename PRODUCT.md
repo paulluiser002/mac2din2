@@ -25,7 +25,7 @@ Planning assumption: homeowners comparing curtains and blinds for their rooms. I
 - The actual business logo, prepared at appropriate quality for website use.
 - Direct contact routes rather than a purchasing workflow.
 - The user delegated remaining creative and technical choices.
-- Current requested deliverable: execute the approved design as a local website.
+- Current requested deliverable: revise the showroom and push to the existing main branch for Vercel hosting.
 - Later user revisions: a page-load curtain unveiling, parallax throughout the whole page, watermark removal, consistent image quality, no repeated photographs, and full image compositions with minimal truncation. These override the original watermark-preservation and detail-crop constraints. Source originals remain preserved.
 
 ## Brand Commitments
@@ -37,7 +37,7 @@ Preserve the existing house/MD monogram, gold and dark roof, brand lettering, an
 Inspected the public business profile through the user's connected Chrome session on 2026-10-30: https://www.instagram.com/mac2din2houseofcurtain/
 
 - Actual logo: `assets/source/mac2din2-logo-original.jpg`, 1080 × 1080.
-- Ten distinct installation photographs are preserved in `assets/source/`; provenance is recorded in `assets/source/README.md`. The website uses enhanced derivatives, with a different photo in every slot.
+- The current website uses 13 distinct photographs and 3 portrait films from the user’s two local media sets. Source filenames and curation are documented in `docs/media/`. Earlier Instagram source photographs remain archived but are no longer shipped as website imagery.
 - Profile and captions show pleated sheers, blackout drapes, swag curtains, Korean blinds, roll-up/sunscreen blinds, and wood blinds.
 - Public inquiry numbers: 0917 836 1524 and 0922 816 9859.
 - Public Instagram profile provides a Message control. No separate messaging deep link has been verified.
@@ -49,3 +49,7 @@ Inspected the public business profile through the user's connected Chrome sessio
 - Let real installations establish confidence in the business.
 - Use motion to demonstrate fabric, light, and room atmosphere.
 - Keep the core information and contact routes usable when 3D cannot run.
+
+## November 2 revision
+
+A smoother GPU curtain entrance, realistic framed window with garden-only outlook, one continuous parallax scene throughout the page, gold/charcoal/champagne logo palette, and curated non-redundant media. Landscape film request was explicitly discarded; original portrait proportions are retained. Source originals in Downloads remain untouched.

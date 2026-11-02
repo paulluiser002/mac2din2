@@ -1,0 +1,181 @@
+[
+  {
+    "id": "living-00",
+    "kind": "image",
+    "group": "living",
+    "title": "Daylight, all around",
+    "alt": "Floor-to-ceiling white sheers around a corner living room with a timber ceiling and sofa.",
+    "width": 1440,
+    "height": 1800,
+    "source": "Mediaset 1/IMG_2372.HEIC",
+    "bytes": 2899575
+  },
+  {
+    "id": "spaces-10",
+    "kind": "image",
+    "group": "living",
+    "title": "A place to gather",
+    "alt": "Floor-length sheers behind the dining table and timber chairs.",
+    "width": 1440,
+    "height": 1800,
+    "source": "Mediaset 1/IMG_2382.HEIC",
+    "bytes": 1949289
+  },
+  {
+    "id": "spaces-17",
+    "kind": "image",
+    "group": "living",
+    "title": "Connected by light",
+    "alt": "Sheers at two kitchen windows around a dark cabinet.",
+    "width": 1440,
+    "height": 1800,
+    "source": "Mediaset 1/IMG_2389.HEIC",
+    "bytes": 2172052
+  },
+  {
+    "id": "spaces-23",
+    "kind": "image",
+    "group": "living",
+    "title": "A quieter working day",
+    "alt": "White sheer curtain beside a chair and plant in a home office.",
+    "width": 1440,
+    "height": 1800,
+    "source": "Mediaset 1/IMG_2395.HEIC",
+    "bytes": 2257429
+  },
+  {
+    "id": "spaces-26",
+    "kind": "image",
+    "group": "living",
+    "title": "A fine finishing detail",
+    "alt": "Tall narrow sheer beside a bathroom mirror and vanity.",
+    "width": 1440,
+    "height": 1800,
+    "source": "Mediaset 1/IMG_2403.HEIC",
+    "bytes": 1712483
+  },
+  {
+    "id": "collection-50",
+    "kind": "image",
+    "group": "collection",
+    "title": "Layers of softness",
+    "alt": "Champagne drapes tied back around white sheer curtains.",
+    "width": 1440,
+    "height": 1800,
+    "source": "Mediaset 2/576075dd-3dcf-4a59-b244-2becf1c6e527.jpeg",
+    "bytes": 40659
+  },
+  {
+    "id": "collection-51",
+    "kind": "image",
+    "group": "collection",
+    "title": "A room, elegantly framed",
+    "alt": "Taupe drapes and white sheers behind classic upholstered seating.",
+    "width": 1440,
+    "height": 1800,
+    "source": "Mediaset 2/5b9c66e6-4af9-4ecf-a446-a4999cd8109c.jpeg",
+    "bytes": 203256
+  },
+  {
+    "id": "collection-52",
+    "kind": "image",
+    "group": "collection",
+    "title": "Light at your own pace",
+    "alt": "White roller blinds above three tall windows in a bedroom.",
+    "width": 1440,
+    "height": 1800,
+    "source": "Mediaset 2/76d059b4-d8bc-4d16-8663-750fddec284d.jpeg",
+    "bytes": 184660
+  },
+  {
+    "id": "collection-53",
+    "kind": "image",
+    "group": "collection",
+    "title": "A classic way to gather",
+    "alt": "Gold and burgundy drapes framing white sheers beside an ornate sofa.",
+    "width": 1440,
+    "height": 1800,
+    "source": "Mediaset 2/a6e70abf-200d-45e0-b273-b0661bccf0d4.jpeg",
+    "bytes": 238162
+  },
+  {
+    "id": "collection-54",
+    "kind": "image",
+    "group": "collection",
+    "title": "Warm wood tones",
+    "alt": "Brown horizontal blinds in a recessed window.",
+    "width": 1440,
+    "height": 1800,
+    "source": "Mediaset 2/ba37445f-080f-4ff9-9e09-76a9d6c7c048.jpeg",
+    "bytes": 101619
+  },
+  {
+    "id": "collection-55",
+    "kind": "image",
+    "group": "collection",
+    "title": "A clean, quiet finish",
+    "alt": "Cream roller blind above white fitted cabinetry.",
+    "width": 1440,
+    "height": 1800,
+    "source": "Mediaset 2/ba3cbe4a-4164-4046-838b-d41a047f7aa2.jpeg",
+    "bytes": 89613
+  },
+  {
+    "id": "collection-56",
+    "kind": "image",
+    "group": "collection",
+    "title": "A different kind of light",
+    "alt": "Dark wood-tone alternating sheer and opaque blind at a tall window.",
+    "width": 1440,
+    "height": 1800,
+    "source": "Mediaset 2/c5afdcca-4bb5-4e0e-b361-acb9834cfe19.jpeg",
+    "bytes": 181857
+  },
+  {
+    "id": "feature-43",
+    "kind": "image",
+    "group": "feature",
+    "title": "Daylight to golden hour",
+    "alt": "White hallway curtains below warm gold cove lighting.",
+    "width": 1440,
+    "height": 960,
+    "source": "Mediaset 1/IMG_2420.HEIC",
+    "bytes": 2089572
+  },
+  {
+    "id": "film-31",
+    "kind": "video",
+    "group": "films",
+    "title": "A room in motion",
+    "alt": "A walkthrough of the curtain installation.",
+    "width": 720,
+    "height": 1280,
+    "duration": 6.466667,
+    "source": "Mediaset 1/IMG_2408.MOV",
+    "bytes": 65456135
+  },
+  {
+    "id": "film-36",
+    "kind": "video",
+    "group": "films",
+    "title": "Following the sheers",
+    "alt": "A walkthrough of the curtain installation.",
+    "width": 720,
+    "height": 1280,
+    "duration": 9.633333,
+    "source": "Mediaset 1/IMG_2413.MOV",
+    "bytes": 102667562
+  },
+  {
+    "id": "film-41",
+    "kind": "video",
+    "group": "films",
+    "title": "Along the hallway",
+    "alt": "A walkthrough of the curtain installation.",
+    "width": 720,
+    "height": 1280,
+    "duration": 3.733333,
+    "source": "Mediaset 1/IMG_2418.MOV",
+    "bytes": 39074084
+  }
+]
