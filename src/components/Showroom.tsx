@@ -4,7 +4,7 @@ import { ACESFilmicToneMapping, PCFShadowMap } from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Room, { type RoomState } from "../scene/Room";
-import type { Fabric, ViewMode } from "../scene/pose";
+import { fabricLabels, type Fabric, type ViewMode } from "../scene/pose";
 import { resetStoryText } from "../scene/story";
 import { allowsMotion } from "../scripts/motion";
 
@@ -164,7 +164,7 @@ export default function Showroom() {
               b.setAttribute("aria-pressed", String(b === button)),
             );
           document.getElementById("fabric-name")!.textContent =
-            `${room.current.fabric[0].toUpperCase()}${room.current.fabric.slice(1)}`;
+            fabricLabels[room.current.fabric];
           room.current.invalidate?.();
         };
         button.addEventListener("click", click);
@@ -177,6 +177,7 @@ export default function Showroom() {
       requestAnimationFrame(() =>
         anchor.scrollIntoView({ behavior: "instant", block: "start" }),
       );
+    document.dispatchEvent(new Event("showroom:ready"));
     cleanup.current = () => {
       trigger.kill();
       journey.kill();

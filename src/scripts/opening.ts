@@ -1,28 +1,43 @@
-import { animateEntrance } from "./entrance.ts";
 export function initOpening(
   opening: HTMLElement,
   pageParts: HTMLElement[],
   bypass: boolean,
 ) {
-  let stopCloth: (() => void) | undefined;
-  let finished = false;
+  const doc = opening.ownerDocument;
   let timeout: ReturnType<typeof setTimeout> | undefined;
+  let warmup: ReturnType<typeof setTimeout> | undefined;
+  let finished = false,
+    started = false;
   const finish = () => {
     if (finished) return;
     finished = true;
     clearTimeout(timeout);
-    stopCloth?.();
+    clearTimeout(warmup);
+    doc.removeEventListener("showroom:ready", ready);
+    doc.documentElement.classList.remove("intro-controlled", "room-intro");
+    if (started) doc.documentElement.classList.add("intro-entered");
     opening.hidden = true;
     pageParts.forEach((part) => {
       part.inert = false;
     });
-    const doc = opening.ownerDocument;
     doc.documentElement.dataset.unveiled = "true";
     doc.dispatchEvent(new doc.defaultView!.Event("showroom:unveiled"));
   };
+  const reveal = (source: "room" | "fallback") => {
+    if (finished || started) return;
+    started = true;
+    clearTimeout(warmup);
+    clearTimeout(timeout);
+    opening.dataset.revealSource = source;
+    if (source === "room") doc.documentElement.classList.add("room-intro");
+    opening.classList.add("revealing");
+    timeout = setTimeout(finish, 2250);
+  };
+  function ready() {
+    reveal("room");
+  }
   const alreadyFinished =
-    opening.ownerDocument.defaultView?.getComputedStyle(opening).visibility ===
-    "hidden";
+    doc.defaultView?.getComputedStyle(opening).visibility === "hidden";
   if (bypass || alreadyFinished) {
     finish();
     return finish;
@@ -36,9 +51,16 @@ export function initOpening(
   opening.addEventListener("animationend", (event) => {
     if (event.target === opening) finish();
   });
-  const canvas = opening.querySelector<HTMLCanvasElement>("canvas");
-  if (canvas) stopCloth = animateEntrance(canvas, finish);
-  // A stalled animation must never leave the site's keyboard navigation locked.
-  timeout = setTimeout(finish, 3400);
+  const cssTime = opening.getAnimations?.()[0]?.currentTime;
+  const cssAge = typeof cssTime === "number" ? cssTime : 0;
+  // Late JavaScript keeps the already-running no-JS reveal instead of restarting it.
+  if (cssAge > 350) {
+    timeout = setTimeout(finish, Math.max(0, 3800 - cssAge));
+    return finish;
+  }
+  doc.documentElement.classList.add("intro-controlled");
+  doc.addEventListener("showroom:ready", ready);
+  if (doc.documentElement.classList.contains("scene-ready")) ready();
+  else warmup = setTimeout(() => reveal("fallback"), 1400);
   return finish;
 }

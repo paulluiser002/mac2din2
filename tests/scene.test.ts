@@ -61,7 +61,7 @@ test("whole-page camera path remains continuous across every section boundary", 
 test("parallax journey includes a fabric close-up and a warm room view without cuts", async () => {
   const { journeyCamera } = await import("../src/scene/pose.ts");
   const wide = journeyCamera(0),
-    close = journeyCamera(0.32),
+    close = journeyCamera(0.16),
     golden = journeyCamera(0.62);
   assert.ok(close.z < wide.z * 0.5);
   assert.ok(golden.warmth > 0.7);

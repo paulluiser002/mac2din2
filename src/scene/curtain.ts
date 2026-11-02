@@ -8,13 +8,14 @@ export function sampleCurtain(
   v: number,
   openness: number,
   side: -1 | 1,
+  folds = 11,
 ) {
   const open = Math.max(0, Math.min(1, openness));
   const width = 2.95 - open * 2.3;
-  const fold = u * Math.PI * 22;
+  const fold = u * Math.PI * folds * 2;
   return {
     x: side * (3 - u * width),
-    y: 5.05 - v * 4.88 + Math.sin(u * Math.PI * 11) * 0.023 * v * v,
+    y: 5.05 - v * 4.88 + Math.sin(u * Math.PI * folds) * 0.023 * v * v,
     z:
       -0.72 +
       Math.cos(fold + Math.sin(v * 3 + u * 8) * v * 0.18) *
@@ -28,11 +29,20 @@ export function updateCurtainGeometry(
   geometry: BufferGeometry,
   openness: number,
   side: -1 | 1,
+  folds = 11,
+  profile?: Float32Array,
 ) {
   const positions = geometry.getAttribute("position");
   for (let row = 0; row <= rows; row++) {
     for (let column = 0; column <= columns; column++) {
-      const p = sampleCurtain(column / columns, row / rows, openness, side);
+      const v = row / rows;
+      const slot = v * ((profile?.length ?? 1) - 1),
+        lo = Math.floor(slot),
+        hi = Math.min(lo + 1, (profile?.length ?? 1) - 1);
+      const pull = profile
+        ? profile[lo] + (profile[hi] - profile[lo]) * (slot - lo)
+        : openness;
+      const p = sampleCurtain(column / columns, v, pull, side, folds);
       positions.setXYZ(row * (columns + 1) + column, p.x, p.y, p.z);
     }
   }
@@ -41,7 +51,11 @@ export function updateCurtainGeometry(
   if (!geometry.boundingSphere) geometry.computeBoundingSphere();
 }
 
-export function createCurtainGeometry(openness: number, side: -1 | 1) {
+export function createCurtainGeometry(
+  openness: number,
+  side: -1 | 1,
+  folds = 11,
+) {
   const geometry = new BufferGeometry();
   const count = (columns + 1) * (rows + 1);
   geometry.setAttribute(
@@ -78,6 +92,6 @@ export function createCurtainGeometry(openness: number, side: -1 | 1) {
   }
   geometry.setAttribute("uv", new Float32BufferAttribute(uv, 2));
   geometry.setIndex(indices);
-  updateCurtainGeometry(geometry, openness, side);
+  updateCurtainGeometry(geometry, openness, side, folds);
   return geometry;
 }

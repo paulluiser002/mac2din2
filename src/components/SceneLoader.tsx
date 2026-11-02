@@ -12,12 +12,7 @@ export default function SceneLoader() {
         .connection?.saveData,
     );
     const load = async () => {
-      if (
-        loading ||
-        !document.documentElement.dataset.unveiled ||
-        !allowsMotion(motion.matches, saveData)
-      )
-        return;
+      if (loading || !allowsMotion(motion.matches, saveData)) return;
       loading = true;
       try {
         const module = await import("./Showroom");

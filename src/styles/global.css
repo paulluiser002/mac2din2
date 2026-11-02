@@ -719,40 +719,7 @@ main,
   inset: 0;
   z-index: 100;
   overflow: hidden;
-  animation: curtain-complete 2.95s forwards;
-}
-.opening-cloth {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: none;
-}
-.opening-panel {
-  position: absolute;
-  inset-block: 0;
-  width: 50.5%;
-  background: repeating-linear-gradient(
-    90deg,
-    #49351c 0%,
-    #876431 2%,
-    #b18a48 4%,
-    #98733b 6%,
-    #4e381e 8%
-  );
-  animation: fallback-open 2.75s 0.1s cubic-bezier(0.45, 0, 0.2, 1) forwards;
-}
-.opening-left {
-  left: 0;
-  transform-origin: left center;
-}
-.opening-right {
-  right: 0;
-  transform-origin: right center;
-}
-.cloth-ready .opening-panel {
-  visibility: hidden;
+  animation: curtain-complete 3.5s forwards;
 }
 .opening-signature {
   position: absolute;
@@ -1205,9 +1172,6 @@ main,
   .opening-curtain {
     display: none;
   }
-  .opening-panel {
-    animation: none;
-  }
   *,
   *::before,
   *::after {
@@ -1472,4 +1436,79 @@ main,
   outline-offset: 2px;
 }
 
-.fabric-swatch:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.fabric-swatch:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.fabric-closeup {
+  position: absolute;
+  inset: -16%;
+  background: url("/media/entrance-fabric.webp") center/auto 100%;
+  transform: scale(1.12);
+  animation: fabric-fallback 3.4s ease-in-out both;
+  filter: saturate(0.25) contrast(0.65) brightness(1.05);
+}
+.intro-controlled .opening-curtain {
+  animation: none;
+}
+.intro-controlled .fabric-closeup {
+  animation: none;
+  opacity: 1;
+  transition:
+    transform 2.2s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.45s ease;
+}
+.intro-controlled .opening-signature {
+  animation: none;
+  opacity: 1;
+  transition: opacity 0.25s;
+}
+.intro-controlled .revealing .fabric-closeup {
+  transform: scale(0.94);
+  opacity: 0;
+}
+.intro-controlled .revealing .opening-signature {
+  opacity: 0;
+}
+.intro-controlled .page-light,
+.intro-controlled .hero-intro,
+.intro-controlled .hero-bottom,
+.intro-controlled .room-controls {
+  opacity: 0;
+}
+.room-intro.scene-ready #scene-mount {
+  opacity: 1;
+  transition: none;
+}
+.page-light {
+  transition: opacity 0.6s ease;
+}
+.intro-entered .hero-intro,
+.intro-entered .hero-bottom,
+.intro-entered .room-controls {
+  animation: hero-intro-in 0.7s ease-out backwards;
+}
+@keyframes fabric-fallback {
+  0%,
+  60% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+@keyframes hero-intro-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.opening-curtain {
+  touch-action: none;
+}

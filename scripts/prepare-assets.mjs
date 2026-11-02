@@ -106,6 +106,10 @@ try {
     .resize(1600, 1100, { fit: "cover" })
     .webp({ quality: 87 })
     .toFile("public/media/window-garden.webp");
+  await sharp("assets/scene/entrance-fabric.png")
+    .resize({ width: 384 })
+    .webp({ quality: 90 })
+    .toFile("public/media/entrance-fabric.webp");
   console.log(
     `Prepared ${media.length} unique media sources and the illustrative window outlook.`,
   );

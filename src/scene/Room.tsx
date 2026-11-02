@@ -7,7 +7,6 @@ import {
   SRGBColorSpace,
   DoubleSide,
   MeshStandardMaterial,
-  PlaneGeometry,
   PMREMGenerator,
   RepeatWrapping,
   Vector3,
@@ -15,11 +14,12 @@ import {
 } from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
-import { createCurtainGeometry, updateCurtainGeometry } from "./curtain";
+import WindowDisplays from "./WindowDisplays";
 import {
   fabricColors,
   getScenePose,
   journeyCamera,
+  introCamera,
   type Fabric,
   type ViewMode,
 } from "./pose";
@@ -30,6 +30,7 @@ export type RoomState = {
   mode: ViewMode;
   fabric: Fabric;
   active: boolean;
+  introProgress?: number;
   invalidate?: () => void;
   onSlow: () => void;
 };
@@ -138,28 +139,23 @@ export default function Room({
   onReady: (canvas: HTMLCanvasElement) => void;
 }) {
   const { gl, scene, camera, invalidate, setDpr } = useThree();
-  const drapeLeft = useMemo(() => createCurtainGeometry(0.15, -1), []);
-  const drapeRight = useMemo(() => createCurtainGeometry(0.15, 1), []);
-  const outlook = useLoader(TextureLoader, "/media/window-garden.webp");
+  const [outlook, clothTexture] = useLoader(TextureLoader, [
+    "/media/window-garden.webp",
+    "/media/entrance-fabric.webp",
+  ]);
+  clothTexture.colorSpace = SRGBColorSpace;
   outlook.colorSpace = SRGBColorSpace;
   const firstFrame = useRef(false);
+  const introStart = useRef<number | null>(null);
   const readyFrame = useRef(0);
   const sunlight = useRef<DirectionalLight>(null);
-  const current = useRef({ open: 0.15, slow: 0, frames: 0 });
+  const current = useRef({ slow: 0 });
   const target = useMemo(() => new Vector3(0.15, 2.25, 0), []);
   const color = useMemo(() => new Color(fabricColors.stone), []);
   const lookDestination = useMemo(() => new Vector3(), []);
   const daySun = useMemo(() => new Color("#fff7e6"), []);
   const goldenSun = useMemo(() => new Color("#ffc885"), []);
   const destination = useMemo(() => new Vector3(), []);
-  const sheer = useMemo(() => {
-    const geometry = new PlaneGeometry(5.65, 4.82, 160, 20);
-    const positions = geometry.getAttribute("position");
-    for (let i = 0; i < positions.count; i++)
-      positions.setZ(i, Math.cos(positions.getX(i) * 28) * 0.032);
-    geometry.computeVertexNormals();
-    return geometry;
-  }, []);
   const weave = useMemo(() => {
     const canvas = document.createElement("canvas");
     canvas.width = canvas.height = 64;
@@ -185,10 +181,10 @@ export default function Room({
         color: fabricColors.stone,
         side: DoubleSide,
         roughness: 0.95,
-        bumpMap: weave,
-        bumpScale: 0.035,
+        bumpMap: clothTexture,
+        bumpScale: 0.018,
       }),
-    [weave],
+    [weave, clothTexture],
   );
 
   useEffect(() => {
@@ -218,25 +214,43 @@ export default function Room({
     if (!state.current.active) return;
     const pose = getScenePose(state.current.progress, state.current.mode);
     const blend = 1 - Math.exp(-Math.min(delta, 0.05) * 7);
-    const difference = pose.openness - current.current.open;
-    if (Math.abs(difference) > 0.0001) {
-      current.current.open += difference * blend;
-      updateCurtainGeometry(drapeLeft, current.current.open, -1);
-      updateCurtainGeometry(drapeRight, current.current.open, 1);
-    }
     color.set(fabricColors[state.current.fabric]);
     material.color.lerp(color, blend);
     const journey = journeyCamera(state.current.journey);
     destination.set(
-      mobile ? journey.x * 0.48 : journey.x,
+      mobile
+        ? journey.target[0] + (journey.x - journey.target[0]) * 0.48
+        : journey.x,
       journey.y + (mobile ? 0.25 : 0),
       journey.z + (mobile ? 2.2 : 0),
     );
-    const cameraMoving = camera.position.distanceTo(destination) > 0.001;
-    camera.position.lerp(destination, blend);
-    lookDestination.set(...journey.target);
-    const targetMoving = target.distanceTo(lookDestination) > 0.001;
-    target.lerp(lookDestination, blend);
+    const opening = document.getElementById("opening-curtain");
+    const introActive =
+      document.documentElement.classList.contains("intro-controlled") &&
+      opening &&
+      !opening.hidden &&
+      opening.dataset.revealSource !== "fallback";
+    let cameraMoving = false,
+      targetMoving = false;
+    if (introActive) {
+      if (introStart.current === null) introStart.current = performance.now();
+      const progress = Math.min(
+        1,
+        (performance.now() - introStart.current) / 2200,
+      );
+      state.current.introProgress = progress;
+      const pose = introCamera(progress, mobile);
+      camera.position.set(...pose.camera);
+      target.set(...pose.target);
+      cameraMoving = progress < 1;
+    } else {
+      state.current.introProgress = undefined;
+      cameraMoving = camera.position.distanceTo(destination) > 0.001;
+      camera.position.lerp(destination, blend);
+      lookDestination.set(...journey.target);
+      targetMoving = target.distanceTo(lookDestination) > 0.001;
+      target.lerp(lookDestination, blend);
+    }
     camera.lookAt(target);
     if (sunlight.current) {
       sunlight.current.intensity = pose.light * (2.2 - journey.warmth * 0.45);
@@ -247,12 +261,7 @@ export default function Room({
         Math.abs(material.color.g - color.g) +
         Math.abs(material.color.b - color.b) >
       0.001;
-    if (
-      Math.abs(difference) > 0.0001 ||
-      cameraMoving ||
-      targetMoving ||
-      colorMoving
-    ) {
+    if (cameraMoving || targetMoving || colorMoving) {
       if (delta > 0.065 && delta < 0.3) current.current.slow++;
       else current.current.slow = Math.max(0, current.current.slow - 1);
       if (current.current.slow === 30) setDpr(0.8);
@@ -277,8 +286,8 @@ export default function Room({
         castShadow
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
-        shadow-camera-left={-8}
-        shadow-camera-right={8}
+        shadow-camera-left={-12}
+        shadow-camera-right={34}
         shadow-camera-top={8}
         shadow-camera-bottom={-8}
         shadow-normalBias={0.025}
@@ -286,78 +295,31 @@ export default function Room({
       />
       <directionalLight position={[2, 5, -5]} intensity={1} color="#fff9dd" />
 
-      <Box at={[0, -0.15, 1]} size={[22, 0.28, 18]} color="#d5d1c3" />
-      <Box at={[-6.5, 3.5, -1.75]} size={[6.8, 7, 0.22]} color="#e8e6df" />
-      <Box at={[6.5, 3.5, -1.75]} size={[6.8, 7, 0.22]} color="#e8e6df" />
-      <Box at={[0, 6.1, -1.75]} size={[6.3, 1.8, 0.22]} color="#e8e6df" />
-      <Box at={[0, 0.08, -1.75]} size={[6.3, 0.16, 0.22]} color="#e8e6df" />
-      <Box at={[-5.4, 3.2, 2]} size={[0.2, 6.4, 7.7]} color="#eeece5" />
-      {/* Recessed glazing and an actual outdoor photograph sit behind the fabric. */}
-      <mesh position={[0, 2.75, -4.6]}>
-        <planeGeometry args={[9.4, 7.2]} />
-        <meshBasicMaterial map={outlook} color="#dce4dd" />
-      </mesh>
-      <Box at={[-3.04, 2.67, -1.76]} size={[0.18, 5.3, 0.5]} color="#3d3830" />
-      <Box at={[3.04, 2.67, -1.76]} size={[0.18, 5.3, 0.5]} color="#3d3830" />
-      <Box at={[0, 5.28, -1.76]} size={[6.25, 0.18, 0.5]} color="#3d3830" />
-      <Box at={[0, 0.12, -1.76]} size={[6.25, 0.18, 0.5]} color="#3d3830" />
-      {[-2.94, -1.47, 0, 1.47, 2.94].map((x) => (
-        <group key={x}>
-          <Box
-            at={[x, 2.7, -1.67]}
-            size={[0.065, 5.05, 0.16]}
-            color="#5c5140"
-          />
-          <Box
-            at={[x + 0.03, 2.7, -1.56]}
-            size={[0.012, 5.05, 0.025]}
-            color="#b29b6c"
-          />
-        </group>
-      ))}
-      <Box at={[0, 2.72, -1.64]} size={[5.95, 0.065, 0.14]} color="#5c5140" />
-      <Box at={[0, 0.07, -1.47]} size={[6.5, 0.14, 0.78]} color="#d4cbbb" />
-      {[-2.2, -0.73, 0.73, 2.2].map((x) => (
-        <mesh key={x} position={[x, 2.7, -1.73]}>
-          <planeGeometry args={[1.4, 4.98]} />
-          <meshPhysicalMaterial
-            color="#dce9e5"
-            transparent
-            opacity={0.09}
-            roughness={0.08}
-            metalness={0.1}
-            depthWrite={false}
-          />
-        </mesh>
-      ))}
-      {[-0.12, 0.12].map((x) => (
+      <Box at={[10.5, -0.15, 1]} size={[52, 0.28, 18]} color="#d5d1c3" />
+      {[-5.25, 5.25, 15.75, 26.25].map((x) => (
         <Box
           key={x}
-          at={[x, 2.45, -1.45]}
-          size={[0.035, 0.26, 0.08]}
-          color="#ad8c4b"
+          at={[x, 3.5, -1.75]}
+          size={[4.2, 7, 0.24]}
+          color="#eee9df"
         />
       ))}
-      <Box at={[0, 5.18, -0.78]} size={[6.4, 0.1, 0.15]} color="#ac9365" />
-
-      <mesh geometry={sheer} position={[0, 2.62, -1.32]} receiveShadow>
-        <meshStandardMaterial
-          color="#fffef5"
-          side={DoubleSide}
-          transparent
-          opacity={0.38}
-          roughness={0.95}
-          depthWrite={false}
-        />
-      </mesh>
-      <mesh geometry={drapeLeft} material={material} castShadow receiveShadow />
-      <mesh
-        geometry={drapeRight}
+      <Box at={[10.5, 6.1, -1.75]} size={[40, 1.8, 0.24]} color="#eee9df" />
+      <Box at={[10.5, 0.08, -1.75]} size={[40, 0.16, 0.24]} color="#eee9df" />
+      <WindowDisplays
+        state={state}
         material={material}
-        castShadow
-        receiveShadow
+        weave={weave}
+        outlook={outlook}
       />
-
+      <Box
+        at={[10.5, 0.35, 0.8]}
+        size={[3.2, 0.12, 0.7]}
+        color="#a48558"
+        soft
+      />
+      <Box at={[9.3, 0.16, 0.8]} size={[0.12, 0.35, 0.6]} color="#8d7049" />
+      <Box at={[11.7, 0.16, 0.8]} size={[0.12, 0.35, 0.6]} color="#8d7049" />
       <Box
         at={[0, 0.014, 2.3]}
         size={[6.25, 0.025, 4.6]}

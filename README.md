@@ -27,7 +27,7 @@ Vercel Astro preset, root `./`, install `npm ci`, build `npm run build`, output 
 
 The logo is the actual business identity. 13 unique photographs and 3 distinct portrait walkthroughs come from the user's Mac2Din2 Mediaset 1 and 2. See `docs/media/README.md` for curation and processing. The old public Instagram photographs are removed. Originals remain untouched in Downloads. `src/data/media.json` drives the two photo galleries, three-three-film gallery and one feature photograph.
 
-A small GPU cloth mesh owns the entrance. The larger React/Three room loads after the opening finishes. One fixed room spans the full page; camera motion follows the entire document, with independent foreground depth. The architectural scene and outdoor garden are illustrative. A smooth camera path moves from room-wide views to close fabric views and warmer light, then back to the room. Skip, direct anchors, reduced motion, Data Saver and WebGL failure preserve readable HTML and direct contact.
+The entrance starts on smooth champagne folds, then pulls the actual 3D camera back into the first window and brings in the hero copy. The scene warms behind the fabric; slow or disabled WebGL uses the HTML window fallback. Three architectural bays span one continuous room: pleated drapes/sheers, an arched window with linen curtains, and a wide window with wood blinds. Each opens and closes as the camera travels along the page. Cloth gathering uses damped spring dynamics. Reloads reset to the hero and replay the reveal; fresh external section links remain direct. Skip, reduced motion and Data Saver preserve readable HTML and direct contact.
 
 Photo carousels loop with inert sentinels, touch swiping, large arrows over the image edges and arrow-key navigation. Films use an independent three-column gallery on desktop and stacked cards on mobile. Films load near view and autoplay muted/inline when visible, with explicit pause/play and offscreen/tab suspension. Visitors with reduced motion or Data Saver start films manually.
 
@@ -40,3 +40,5 @@ Photo carousels loop with inert sentinels, touch swiping, large arrows over the 
 - `assets/`: original logo and earlier source archive, not all used by the page.
 
 Desktop/mobile browser QA and automated tests cover the supported interactions. Actual low-end phone GPU behavior and completed calls/Instagram messages require real-device verification. The optional Three bundle still triggers a chunk-size advisory and an upstream Three Clock warning.
+
+Hero fabric controls use neutral fabric relief, so Stone, Champagne and Ivory tint the curtain without a baked-in gold image overriding the chosen color. Swatches and labels share the scene palette.
