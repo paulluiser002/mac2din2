@@ -609,71 +609,93 @@ main,
   padding-bottom: 140px;
   display: grid;
   grid-template-columns: 1.2fr 1fr;
-  gap: 12%;
+  gap: clamp(32px, 7vw, 112px);
   align-items: center;
-  background: linear-gradient(
-    transparent,
-    rgba(250, 247, 239, 0.94) 20%,
-    rgba(250, 247, 239, 0.88)
-  );
+  background:
+    radial-gradient(ellipse at 15% 75%, #e9dcc0 0%, transparent 58%),
+    linear-gradient(transparent, var(--paper) 24%, var(--paper));
+}
+.contact-intro h2::before {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 1px;
+  margin-bottom: 24px;
+  background: var(--gold);
 }
 .contact-intro p {
-  margin-top: 28px;
+  margin-top: 22px;
+  max-width: 42ch;
+  line-height: 1.7;
   color: #62533e;
 }
 .contact-links {
-  max-width: 440px;
+  justify-self: end;
+  max-width: 480px;
   width: 100%;
+  padding: clamp(14px, 2.4vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+}
+.contact-primary,
+.contact-secondary,
+.contact-social {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 12px;
+  font-size: 14px;
+}
+.contact-primary,
+.contact-secondary {
+  justify-content: space-between;
 }
 .contact-primary {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--gold);
-  padding-bottom: 26px;
+  padding: 18px clamp(12px, 2vw, 24px);
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--paper);
+}
+.contact-primary:hover {
+  background: #453726;
 }
 .contact-primary small {
   display: block;
+  margin-bottom: 4px;
   font-size: 12px;
-  margin-bottom: 12px;
-  color: var(--muted);
+  color: var(--champagne);
 }
 .contact-primary span span {
-  font-size: clamp(27px, 2.7vw, 40px);
+  font-family: "Bodoni Moda", Georgia, serif;
+  font-size: clamp(26px, 3vw, 40px);
   letter-spacing: -0.03em;
   white-space: nowrap;
 }
 .contact-primary > svg {
-  width: 25px;
-  height: 25px;
+  color: var(--champagne);
 }
-.contact-secondary {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 25px 0;
-  font-size: 13px;
+.contact-secondary,
+.contact-social {
   border-bottom: 1px solid var(--line);
 }
-.instagram-link {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  padding-top: 28px;
-  font-size: 14px;
+.contact-secondary:hover,
+.contact-social:hover {
+  background: var(--daylight);
 }
-.instagram-link > svg:last-child {
+.contact-social > svg:last-child {
   margin-left: auto;
 }
-.instagram-link small {
+.contact-social small {
   display: block;
-  font-size: 10px;
+  margin-top: 4px;
+  font-size: 12px;
   color: var(--muted);
-  margin-top: 5px;
 }
 .contact-tip {
-  font-size: 10px;
-  margin-top: 25px;
+  padding: 16px 12px 0;
+  font-size: 12px;
+  line-height: 1.6;
   color: var(--muted);
 }
 .site-footer {
@@ -808,9 +830,6 @@ main,
   }
   .feature-copy h2 {
     font-size: 48px;
-  }
-  .contact-section {
-    gap: 7%;
   }
 }
 @media (max-width: 700px) {
@@ -1020,27 +1039,24 @@ main,
   }
   .contact-section {
     display: block;
-    padding-top: 130px;
-    padding-bottom: 90px;
+    min-height: auto;
+    padding-top: 104px;
+    padding-bottom: 72px;
   }
   .contact-intro {
-    margin-bottom: 70px;
+    margin-bottom: 32px;
   }
   .contact-intro h2 {
     font-size: 48px;
   }
   .contact-intro p {
-    font-size: 12px;
     max-width: 340px;
   }
   .contact-links {
     max-width: none;
   }
   .contact-primary span span {
-    font-size: 35px;
-  }
-  .contact-secondary {
-    font-size: 12px;
+    font-size: clamp(26px, 6vw, 36px);
   }
   .site-footer {
     flex-wrap: wrap;
@@ -1107,9 +1123,6 @@ main,
   }
   .hero-story h2 {
     font-size: 43px;
-  }
-  .contact-primary span span {
-    font-size: 29px;
   }
 }
 @media (max-width: 700px) and (min-height: 750px) {
