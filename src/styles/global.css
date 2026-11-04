@@ -1040,14 +1040,14 @@ main,
   .contact-section {
     display: block;
     min-height: auto;
-    padding-top: 104px;
+    padding-top: 76px;
     padding-bottom: 72px;
   }
   .contact-intro {
     margin-bottom: 32px;
   }
   .contact-intro h2 {
-    font-size: 48px;
+    font-size: clamp(34px, 8vw, 48px);
   }
   .contact-intro p {
     max-width: 340px;
